@@ -7,7 +7,7 @@ const music          = document.getElementById("music");
 const petalsWrap     = document.getElementById("petals");
 const sparklesWrap   = document.getElementById("sparkles");
 
-/* ================== ПЕРЕХОД МЕЖДУ СТРАНИЦАМИ ================== */
+/* ================== ПЕРЕХОД НА СТРАНИЦУ ПОДАРКА ================== */
 
 if (openGiftBtn) {
     openGiftBtn.addEventListener("click", (e) => {
@@ -20,26 +20,10 @@ if (openGiftBtn) {
             music.play().catch(() => {});
         }
 
-        // Плавный переход
-        pageTransition.classList.add("show");
-
-        setTimeout(() => {
-            window.location.href = href;
-        }, 700);
+        // Просто переходим на новую страницу (без занавески)
+        window.location.href = href;
     });
 }
-
-// На gift.html плавно убираем занавес при загрузке
-window.addEventListener("load", () => {
-    if (pageTransition && document.body.classList.contains("gift-page")) {
-        setTimeout(() => {
-            pageTransition.classList.add("show");
-            requestAnimationFrame(() => {
-                pageTransition.classList.remove("show");
-            });
-        }, 50);
-    }
-});
 
 /* ================== МУЗЫКА ================== */
 
@@ -97,8 +81,8 @@ function createPetal() {
 }
 
 if (petalsWrap) {
-    setInterval(createPetal, 800);
-    for (let i = 0; i < 20; i++) setTimeout(createPetal, i * 250);
+    setInterval(createPetal, 900);
+    for (let i = 0; i < 15; i++) setTimeout(createPetal, i * 250);
 }
 
 /* ================== ИСКОРКИ ================== */
@@ -116,8 +100,8 @@ function createSparkle() {
 }
 
 if (sparklesWrap) {
-    setInterval(createSparkle, 400);
-    for (let i = 0; i < 15; i++) setTimeout(createSparkle, i * 200);
+    setInterval(createSparkle, 500);
+    for (let i = 0; i < 10; i++) setTimeout(createSparkle, i * 200);
 }
 
 /* ================== ОТКРЫТИЕ КОНВЕРТА ================== */
@@ -142,7 +126,6 @@ if (track && prevBtn && nextBtn && dotsWrap) {
     let autoplayTimer = null;
     const AUTOPLAY_DELAY = 4500;
 
-    // Точки
     slides.forEach((_, i) => {
         const dot = document.createElement("button");
         dot.classList.add("dot");
@@ -180,7 +163,6 @@ if (track && prevBtn && nextBtn && dotsWrap) {
     carouselEl.addEventListener("mouseenter", stopAutoplay);
     carouselEl.addEventListener("mouseleave", startAutoplay);
 
-    // Свайпы
     let touchStartX = 0;
     carouselEl.addEventListener("touchstart", (e) => {
         touchStartX = e.touches[0].clientX;
