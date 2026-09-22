@@ -2,27 +2,23 @@
 
 document.body.classList.add("js-ready");
 
-const openGiftBtn    = document.getElementById("openGift");
-const pageTransition = document.getElementById("pageTransition");
-const musicButton    = document.getElementById("musicButton");
-const music          = document.getElementById("music");
-const petalsWrap     = document.getElementById("petals");
-const sparklesWrap   = document.getElementById("sparkles");
+const openGiftBtn  = document.getElementById("openGift");
+const musicButton  = document.getElementById("musicButton");
+const music        = document.getElementById("music");
+const petalsWrap   = document.getElementById("petals");
 
-/* ================== ПЕРЕХОД НА СТРАНИЦУ ПОДАРКА ================== */
+/* ================== ПЕРЕХОД ================== */
 
 if (openGiftBtn) {
     openGiftBtn.addEventListener("click", (e) => {
         e.preventDefault();
         const href = openGiftBtn.getAttribute("href");
 
-        // Запускаем музыку
         if (music && music.paused) {
             music.volume = 0.4;
             music.play().catch(() => {});
         }
 
-        // Просто переходим на новую страницу (без занавески)
         window.location.href = href;
     });
 }
@@ -45,28 +41,26 @@ if (musicButton && music) {
     });
 }
 
-/* ================== REVEAL ПРИ ПРОКРУТКЕ ================== */
+/* ================== REVEAL ================== */
 
 const revealElements = document.querySelectorAll(".reveal");
 
 if (revealElements.length) {
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add("visible");
-                }, i * 120);
-                revealObserver.unobserve(entry.target);
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+    revealElements.forEach(el => observer.observe(el));
 }
 
-/* ================== ЛЕПЕСТКИ ================== */
+/* ================== ПЕТАЛИ (мало, легко) ================== */
 
-const petalEmojis = ["🌸", "🌷", "❤️", "🤍", "💗", "🌺", "💕"];
+const petalEmojis = ["🌸", "🌷", "💗", "🤍", "💕"];
 
 function createPetal() {
     const petal = document.createElement("div");
@@ -74,39 +68,23 @@ function createPetal() {
     petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
 
     petal.style.left = Math.random() * 100 + "vw";
-    petal.style.fontSize = (14 + Math.random() * 20) + "px";
-    petal.style.animationDuration = (8 + Math.random() * 9) + "s";
-    petal.style.animationDelay = Math.random() * 5 + "s";
+    petal.style.fontSize = (14 + Math.random() * 10) + "px";
+    petal.style.animationDuration = (10 + Math.random() * 6) + "s";
+    petal.style.animationDelay = Math.random() * 3 + "s";
 
     petalsWrap.appendChild(petal);
-    setTimeout(() => petal.remove(), 22000);
+    setTimeout(() => petal.remove(), 20000);
 }
 
 if (petalsWrap) {
-    setInterval(createPetal, 900);
-    for (let i = 0; i < 15; i++) setTimeout(createPetal, i * 250);
+    // Только 8 лепестков — не перегружаем GPU
+    for (let i = 0; i < 8; i++) {
+        setTimeout(createPetal, i * 800);
+    }
+    setInterval(createPetal, 2500);
 }
 
-/* ================== ИСКОРКИ ================== */
-
-function createSparkle() {
-    const s = document.createElement("div");
-    s.classList.add("sparkle");
-    s.style.left = Math.random() * 100 + "vw";
-    s.style.top = Math.random() * 100 + "vh";
-    s.style.animationDelay = Math.random() * 3 + "s";
-    s.style.animationDuration = (2 + Math.random() * 2) + "s";
-
-    sparklesWrap.appendChild(s);
-    setTimeout(() => s.remove(), 6000);
-}
-
-if (sparklesWrap) {
-    setInterval(createSparkle, 500);
-    for (let i = 0; i < 10; i++) setTimeout(createSparkle, i * 200);
-}
-
-/* ================== ОТКРЫТИЕ КОНВЕРТА ================== */
+/* ================== КОНВЕРТ ================== */
 
 const envelope = document.getElementById("envelope");
 if (envelope) {
@@ -126,7 +104,7 @@ if (track && prevBtn && nextBtn && dotsWrap) {
     const slides = track.querySelectorAll(".slide");
     let currentIndex = 0;
     let autoplayTimer = null;
-    const AUTOPLAY_DELAY = 4500;
+    const AUTOPLAY_DELAY = 5000;
 
     slides.forEach((_, i) => {
         const dot = document.createElement("button");
@@ -161,17 +139,13 @@ if (track && prevBtn && nextBtn && dotsWrap) {
 
     startAutoplay();
 
-    const carouselEl = document.querySelector(".carousel");
-    carouselEl.addEventListener("mouseenter", stopAutoplay);
-    carouselEl.addEventListener("mouseleave", startAutoplay);
-
     let touchStartX = 0;
-    carouselEl.addEventListener("touchstart", (e) => {
+    track.addEventListener("touchstart", (e) => {
         touchStartX = e.touches[0].clientX;
         stopAutoplay();
     }, { passive: true });
 
-    carouselEl.addEventListener("touchend", (e) => {
+    track.addEventListener("touchend", (e) => {
         const delta = e.changedTouches[0].clientX - touchStartX;
         if (Math.abs(delta) > 50) {
             delta > 0 ? prevSlide() : nextSlide();
@@ -190,12 +164,12 @@ if (wishes.length) {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 wishes.forEach((wish, i) => {
-                    setTimeout(() => wish.classList.add("visible"), i * 500);
+                    setTimeout(() => wish.classList.add("visible"), i * 400);
                 });
                 wishObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.25 });
+    }, { threshold: 0.2 });
 
     wishObserver.observe(wishes[0]);
 }
@@ -220,7 +194,7 @@ if (finalSection) {
     resize();
     window.addEventListener("resize", resize);
 
-    const colors = ["#d98c9c", "#f7b8c4", "#ffd6e0", "#c9798b", "#ffffff", "#ffd166", "#ffb3c6"];
+    const colors = ["#d98c9c", "#f7b8c4", "#ffd6e0", "#c9798b", "#ffffff", "#ffd166"];
 
     function makePiece() {
         return {
@@ -229,10 +203,10 @@ if (finalSection) {
             w: 6 + Math.random() * 8,
             h: 8 + Math.random() * 10,
             color: colors[Math.floor(Math.random() * colors.length)],
-            speedY: 2 + Math.random() * 4,
+            speedY: 2 + Math.random() * 3,
             speedX: -1.5 + Math.random() * 3,
             rotation: Math.random() * Math.PI * 2,
-            rotationSpeed: -0.15 + Math.random() * 0.3,
+            rotationSpeed: -0.12 + Math.random() * 0.24,
             shape: Math.random() > 0.5 ? "rect" : "circle"
         };
     }
@@ -240,7 +214,8 @@ if (finalSection) {
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        confetti.forEach((c, i) => {
+        for (let i = confetti.length - 1; i >= 0; i--) {
+            const c = confetti[i];
             ctx.save();
             ctx.translate(c.x, c.y);
             ctx.rotate(c.rotation);
@@ -260,7 +235,7 @@ if (finalSection) {
             c.rotation += c.rotationSpeed;
 
             if (c.y > canvas.height + 30) confetti.splice(i, 1);
-        });
+        }
 
         if (confettiActive || confetti.length > 0) requestAnimationFrame(draw);
     }
@@ -269,15 +244,15 @@ if (finalSection) {
         if (confettiActive) return;
         confettiActive = true;
 
-        for (let i = 0; i < 180; i++) confetti.push(makePiece());
+        for (let i = 0; i < 100; i++) confetti.push(makePiece());
         draw();
 
         const interval = setInterval(() => {
             if (!confettiActive) { clearInterval(interval); return; }
-            for (let i = 0; i < 40; i++) confetti.push(makePiece());
-        }, 500);
+            for (let i = 0; i < 20; i++) confetti.push(makePiece());
+        }, 600);
 
-        setTimeout(() => { confettiActive = false; clearInterval(interval); }, 10000);
+        setTimeout(() => { confettiActive = false; clearInterval(interval); }, 8000);
     }
 
     const observer = new IntersectionObserver((entries) => {
