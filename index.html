@@ -1,195 +1,53 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Для мамы ❤️</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
+<body class="welcome-page">
 
-<body>
+    <!-- Анимированный фон -->
+    <div class="aurora">
+        <span class="aurora-blob a1"></span>
+        <span class="aurora-blob a2"></span>
+        <span class="aurora-blob a3"></span>
+    </div>
 
-    <!-- Первый экран -->
-    <section class="hero">
+    <!-- Парящие частицы -->
+    <div class="petals" id="petals"></div>
+    <div class="sparkles" id="sparkles"></div>
 
-        <div class="hero-content">
+    <!-- Затемнение при переходе -->
+    <div class="page-transition" id="pageTransition"></div>
 
-            <p class="small-text">
-                Для самого дорогого человека
-            </p>
+    <!-- Музыка -->
+    <audio id="music" loop>
+        <source src="music/song.mp3" type="audio/mpeg">
+    </audio>
+    <button id="musicButton" class="music-button" aria-label="Музыка">🎵</button>
 
-            <h1>
-                Мама ❤️            </h1>
+    <!-- Главный экран -->
+    <section class="welcome">
+        <div class="welcome-card">
+            <p class="welcome-small">Для самого дорогого человека</p>
 
-            <p class="subtitle">
-                У меня есть кое-что для вас...
-            </p>
+            <h1 class="welcome-title">
+                <span>М</span><span>а</span><span>м</span><span>а</span>
+                <span class="heart-beat">❤️</span>
+            </h1>
 
-            <button id="openButton">
-                Открыть подарок 💌            </button>
+            <p class="welcome-sub">У меня есть кое-что для вас...</p>
 
+            <a href="gift.html" class="open-gift-btn" id="openGift">
+                <span class="btn-text">Открыть подарок</span>
+                <span class="btn-icon">💌</span>
+                <span class="btn-shine"></span>
+            </a>
         </div>
-
     </section>
-
-
-    <!-- Поздравление -->
-    <section class="greeting">
-
-        <h2>
-            С днём рождения, мамочка! 🌷        </h2>
-
-        <p>
-            Сегодня ваш день, и мне хочется сказать вам
-            намного больше, чем просто «с днём рождения».
-        </p>
-
-        <p>
-            Спасибо вам за всё, что вы делаете для меня,
-            за вашу любовь, заботу и поддержку.
-        </p>
-
-    </section>
-
-
-    <!-- За что я вас люблю -->
-    <section class="reasons">
-
-        <h2>
-            За что я вас люблю ❤️        </h2>
-
-        <div class="cards">
-
-            <div class="card">
-                <span>🌷</span>
-
-                <h3>
-                    За вашу заботу
-                </h3>
-
-                <p>
-                    Вы всегда думаете обо мне
-                    и стараетесь сделать мою жизнь лучше.
-                </p>
-            </div>
-
-
-            <div class="card">
-                <span>🤍</span>
-
-                <h3>
-                    За вашу поддержку
-                </h3>
-
-                <p>
-                    Вы остаётесь рядом даже тогда,
-                    когда мне сложно.
-                </p>
-            </div>
-
-
-            <div class="card">
-                <span>🏠</span>
-
-                <h3>
-                    За ваше тепло
-                </h3>
-
-                <p>
-                    Рядом с вами я всегда чувствую,
-                    что я дома.
-                </p>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Фотографии -->
-    <section class="gallery">
-
-        <h2>
-            Наши моменты 📸        </h2>
-
-        <div class="photos">
-
-            <img src="images/mama1.jpg" alt="Мама">
-
-            <img src="images/mama2.jpg" alt="Мы вместе">
-
-            <img src="images/mama3.jpg" alt="Семья">
-
-            <img src="images/mama4.jpg" alt="Мама">
-
-            <img src="images/mama5.jpg" alt="Мы">
-
-        </div>
-
-    </section>
-
-
-    <!-- Письмо -->
-    <section class="letter-section">
-
-        <h2>
-            Для вас есть письмо 💌        </h2>
-
-        <div class="envelope" id="envelope">
-
-            <div class="envelope-top"></div>
-
-            <div class="letter">
-
-                <h3>
-                    Мамочка ❤️                </h3>
-
-                <p>
-                    Я хочу сказать вам огромное спасибо
-                    за всё, что вы сделали и продолжаете
-                    делать для меня.
-                </p>
-
-                <p>
-                    Я очень вас люблю и хочу,
-                    чтобы вы всегда были счастливы.
-                </p>
-
-                <p>
-                    Пусть в вашей жизни будет как можно
-                    больше счастливых дней.
-                </p>
-
-                <p>
-                    С днём рождения! 🌷                </p>
-
-            </div>
-
-        </div>
-
-        <p class="click-hint">
-            Нажмите на конверт 💌        </p>
-
-    </section>
-
-
-    <!-- Финал -->
-    <section class="final">
-
-        <h2>
-            С ДНЁМ РОЖДЕНИЯ, МАМА! 🎂        </h2>
-
-        <p>
-            Я вас очень люблю ❤️        </p>
-
-    </section>
-
 
     <script src="script.js"></script>
-
 </body>
-
 </html>
