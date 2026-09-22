@@ -310,15 +310,17 @@ section h2 {
     color: #8b3a5a;
 }
 
+/* По умолчанию всё видно */
 .reveal {
-    opacity: 0;
-    transform: translateY(60px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+/* Скрываем только если JS включён и добавил класс */
+body.js-ready .reveal:not(.visible) {
+    opacity: 0;
+    transform: translateY(60px);
 }
 
 /* ========== ПОЗДРАВЛЕНИЕ ========== */

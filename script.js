@@ -1,5 +1,7 @@
 /* ================== ЭЛЕМЕНТЫ ================== */
 
+document.body.classList.add("js-ready");
+
 const openGiftBtn    = document.getElementById("openGift");
 const pageTransition = document.getElementById("pageTransition");
 const musicButton    = document.getElementById("musicButton");
